@@ -5,7 +5,7 @@ orbs:
 workflows:
   welcome:
     jobs:
-      - welcome/run
+      - welcome/run:
           filters:
             branches:
               only:
