@@ -8,7 +8,7 @@ parameters:
     default: true
   two:
     type: boolean
-    default: true
+    default: false
 
 workflows:
   welcome:
