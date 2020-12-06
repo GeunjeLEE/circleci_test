@@ -5,7 +5,7 @@ orbs:
 parameters:
   one:
     type: boolean
-    default: false
+    default: true
   two:
     type: boolean
     default: false
