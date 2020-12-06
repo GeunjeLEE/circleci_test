@@ -6,7 +6,7 @@ workflows:
   welcome:
     jobs:
       - welcome/run
-      filters:
-        branches:
-          only:
-            - master
+        filters:
+          branches:
+            only:
+              - master
