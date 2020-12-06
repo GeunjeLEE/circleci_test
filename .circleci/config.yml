@@ -2,8 +2,20 @@
 version: 2.1
 orbs:
   welcome: circleci/welcome-orb@0.4.1
+parameters:
+  one:
+    type: boolean
+    default: false
+  two:
+    type: boolean
+    default: false
+
 workflows:
   welcome:
+    when:
+      and:
+        - << pipeline.parameters.one >>
+        - << pipeline.parameters.two >>
     jobs:
       - welcome/run:
           filters:
