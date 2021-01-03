@@ -12,10 +12,6 @@ parameters:
 
 workflows:
   welcome:
-    when:
-      and:
-        - << pipeline.parameters.one >>
-        - << pipeline.parameters.two >>
     jobs:
       - welcome/run:
           filters:
