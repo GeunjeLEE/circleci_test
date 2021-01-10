@@ -16,10 +16,16 @@ jobs:
     executor: default
     steps:
       - run: touch ./test.txt && ls -al
+      - save_cache:
+          key: test_save_cache
+          paths:
+            - "./"
   check:
     executor: two
     steps:
       - run: ls -al
+      - restore_cache:
+          key: test_save_cache
 
 
 workflows:
