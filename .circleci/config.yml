@@ -15,7 +15,8 @@ jobs:
   create:
     executor: default
     steps:
-      - run: cat ./test.txt && ls -al
+      - checkout
+      - run: cat ./test.txt && ls -al && touch ./test2.txt
       - save_cache:
           key: test_save_cache-{{ checksum "test.txt" }}
           paths:
