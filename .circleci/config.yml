@@ -26,6 +26,4 @@ workflows:
   welcome:
     jobs:
       - create
-      - check:
-        requires:
-          - create
+      - check
