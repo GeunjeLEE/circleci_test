@@ -16,17 +16,17 @@ jobs:
     executor: default
     steps:
       - checkout
+      - restore_cache:
+          key: test_save_cache-{{ .BuildNum }}
       - run: cat ./test.txt && ls -al && touch ./test2.txt
+  check:
+    executor: two
+    steps:
+      - run: ls -al && cat ./test.txt
       - save_cache:
           key: test_save_cache-{{ .BuildNum }}
           paths:
             - "./"
-  check:
-    executor: two
-    steps:
-      - restore_cache:
-          key: test_save_cache-{{ .BuildNum }}
-      - run: ls -al && cat ./test.txt
 
 workflows:
   welcome:
