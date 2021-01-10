@@ -3,10 +3,10 @@ version: 2.1
 executors:
   default:
     docker:
-      - image: circleci/node:9.9.0
+      - image: circleci/node:9.11.2-stretch
   two:
     docker:
-      - image: circleci/php:8.0
+      - image: circleci/node:9.10-stretch
 
 orbs:
   welcome: circleci/welcome-orb@0.4.1
@@ -15,16 +15,16 @@ jobs:
   create:
     executor: default
     steps:
-      - run: touch ./test.txt && ls -al
+      - run: cat ./test.txt && ls -al
       - save_cache:
-          key: test_save_cache
+          key: test_save_cache-{{ checksum "test.txt" }}
           paths:
             - "./"
   check:
     executor: two
     steps:
       - restore_cache:
-          key: test_save_cache
+          key: test_save_cache-{{ checksum "test.txt" }}
       - run: ls -al
 
 workflows:
