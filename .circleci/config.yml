@@ -23,10 +23,9 @@ jobs:
   check:
     executor: two
     steps:
-      - run: ls -al
       - restore_cache:
           key: test_save_cache
-
+      - run: ls -al
 
 workflows:
   welcome:
