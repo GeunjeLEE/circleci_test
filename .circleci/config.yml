@@ -24,9 +24,9 @@ jobs:
   check:
     executor: two
     steps:
-      - run: ls -al && cat ./test.txt
       - restore_cache:
           key: test_save_cache-
+      - run: ls -al && cat ./test.txt
 
 workflows:
   welcome:
