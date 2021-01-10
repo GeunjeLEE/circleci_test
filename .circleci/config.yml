@@ -18,15 +18,15 @@ jobs:
       - checkout
       - run: cat ./test.txt && ls -al && touch ./test2.txt
       - save_cache:
-          key: test_save_cache-{{ checksum "test.txt" }}
+          key: test_save_cache-{{ .BuildNum }}
           paths:
             - "./"
   check:
     executor: two
     steps:
       - restore_cache:
-          key: test_save_cache-{{ checksum "test.txt" }}
-      - run: ls -al
+          key: test_save_cache-{{ .BuildNum }}
+      - run: ls -al && cat ./test.txt
 
 workflows:
   welcome:
