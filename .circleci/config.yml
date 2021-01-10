@@ -15,7 +15,7 @@ jobs:
   create:
     executor: default
     steps:
-      - run: touch ./test.txt
+      - run: touch ./test.txt && ls -al
   check:
     executor: two
     steps:
@@ -26,4 +26,6 @@ workflows:
   welcome:
     jobs:
       - create
-      - check
+      - check:
+        requires:
+          - create
