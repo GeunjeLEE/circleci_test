@@ -14,10 +14,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: Dump GitHub context
+    - name: Get Tag Version
+      id: tag_version
+      run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+    
+    - name: echo
       env:
         CURRUNT_TAG_VERSION: ${{ github.event.release.tag_name }}
       run: |
-        echo "$CURRUNT_TAG_VERSION"
-        echo $CURRUNT_TAG_VERSION
-        echo ${{ github.event.release.tag_name }}
+        echo ${{ steps.tag_version.outputs.tag }}
