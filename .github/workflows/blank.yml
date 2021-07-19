@@ -23,7 +23,7 @@ jobs:
       - name: calculate_version
         id: job1
         run: |
-          echo "::set-output name=VERSION::$(cat src/VERSION | cut -c 2-).${{ env.TIME }}"
+          echo "::set-output name=VERSION::$(cat test.txt | cut -c 2-).${{ env.TIME }}"
   docker:
     needs: versioning
     runs-on: ubuntu-latest
