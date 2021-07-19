@@ -1,23 +1,41 @@
-name: build-docker-image
-
+name: "test"
 on:
-  push:
-    tags:
-      - 'v*'
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Person to greet'
+        required: false
+        default: 'Mona the Octocat'
 
 jobs:
-  build_and_deploy:
+  versioning:
     runs-on: ubuntu-latest
-
+    outputs:
+      version: ${{ steps.job1.outputs.VERSION }}
     steps:
-    - uses: actions/checkout@v2
-    
-    - name: Get Tag Version
-      id: tag_version
-      run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
-    
-    - name: echo
-      env:
-        CURRUNT_TAG_VERSION: ${{ github.event.release.tag_name }}
-      run: |
-        echo ${{ steps.tag_version.outputs.tag }}
+      - uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+      - name: calculate current date
+        run: |
+          sudo ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
+          echo "TIME=$(date +'%Y%m%d.%H%M%S')" >> $GITHUB_ENV
+      - name: calculate_version
+        id: job1
+        run: |
+          echo "::set-output name=VERSION::$(cat src/VERSION | cut -c 2-).${{ env.TIME }}"
+  docker:
+    needs: versioning
+    runs-on: ubuntu-latest
+    env:
+      VERSION: ${{ needs.versioning.outputs.version }}
+    steps:
+      - 
+        name: get service name
+        run: |
+          echo "SERVICE=$(echo ${{ github.repository }} | cut -d '/' -f2)" >> $GITHUB_ENV
+      -
+        name: Build and push (docker hub)
+        run: |
+          echo ${{ env.SERVICE }}
+          echo ${{ env.VERSION }}
