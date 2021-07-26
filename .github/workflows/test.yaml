@@ -1,0 +1,17 @@
+name: build-push-docker-image
+
+on:
+  create:
+    tags:
+      - 'v*'
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Get Tag Version
+      id: tag_version
+      run: echo "okay"
