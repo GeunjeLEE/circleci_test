@@ -16,26 +16,6 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: 'recursive'
-      - name: calculate current date
-        run: |
-          sudo ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
-          echo "TIME=$(date +'%Y%m%d.%H%M%S')" >> $GITHUB_ENV
-      - name: calculate_version
-        id: job1
-        run: |
-          echo "::set-output name=VERSION::$(cat test.txt | cut -c 2-).${{ env.TIME }}"
-  docker:
-    needs: versioning
-    runs-on: ubuntu-latest
-    env:
-      VERSION: ${{ needs.versioning.outputs.version }}
-    steps:
-      - 
-        name: get service name
-        run: |
-          echo "SERVICE=$(echo ${{ github.repository }} | cut -d '/' -f2)" >> $GITHUB_ENV
-      -
-        name: Build and push (docker hub)
-        run: |
-          echo ${{ env.SERVICE }}
-          echo ${{ env.VERSION }}
+      - name: echotest
+        id: echo
+        run: echo ${{ secrets.TEST }}
