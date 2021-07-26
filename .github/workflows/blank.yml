@@ -2,10 +2,9 @@ name: "test"
 on:
   workflow_dispatch:
     inputs:
-      name:
-        description: 'Person to greet'
-        required: false
-        default: 'Mona the Octocat'
+      tag:
+        description: 'input image tag `vx.y`'
+        required: true
 
 jobs:
   versioning:
@@ -18,4 +17,11 @@ jobs:
           submodules: 'recursive'
       - name: echotest
         id: echo
-        run: echo ${{ secrets.TEST }}
+        run: |
+          git config user.email github-actions@github.com
+          git config user.name github-actions
+          git pull
+          git add .
+          git commit -m "Create New Tag ${{ github.event.inputs.tag }}"
+          git tag ${{ github.event.inputs.tag }}
+          git push --atomic origin master ${{ env.VERSION }}
