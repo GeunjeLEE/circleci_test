@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.TOKEN }}
       - name: update
         run: |
           echo  $((`cat test.txt`+1)) > test.txt
