@@ -1,0 +1,23 @@
+name: "slack_test"
+on:
+  workflow_dispatch:
+    inputs:
+      trigger:
+        description: 'lets trigger'
+        required: true
+
+jobs:
+  noti-slack:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+      - uses: actions/checkout@v2
+      - name: Slack
+        if: always()
+        uses: 8398a7/action-slack@v3.2.0
+        with:
+          status: ${{job.status}}
+          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+          author_name: Github Action Slack
+        env:
+          SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}
