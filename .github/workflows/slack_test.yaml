@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
       - name: Slack
         if: always()
         uses: 8398a7/action-slack@v3.2.0
