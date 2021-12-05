@@ -18,6 +18,15 @@ jobs:
           then
             exit 1
           fi
+      - name: Slack when job fails
+        if: ${{job.status}} == 'failure'
+        uses: 8398a7/action-slack@v3.2.0
+        with:
+          status: ${{job.status}}
+          fields: repo,commit,action,workflow,job
+          author_name: Github Action Slack
+        env:
+          SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}
   noti-slack:
     runs-on: ubuntu-latest
     steps:
