@@ -7,7 +7,7 @@ on:
         required: true
 
 jobs:
-  noti-slack:
+  foobar:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -18,6 +18,9 @@ jobs:
           then
             exit 1
           fi
+  noti-slack:
+    runs-on: ubuntu-latest
+    steps:
       - name: Slack
         if: always()
         uses: 8398a7/action-slack@v3.2.0
