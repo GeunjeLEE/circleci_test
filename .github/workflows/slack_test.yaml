@@ -13,13 +13,14 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
       - name: isfail
+        id: job
         run: |
           if [ "${{ github.event.inputs.trigger }}" == "fails" ]
           then
             exit 1
           fi
       - name: Slack when job fails
-        if: ${{job.status}} == 'failure'
+        if: steps.job.outcome != 'success'
         uses: 8398a7/action-slack@v3.2.0
         with:
           status: ${{job.status}}
