@@ -12,6 +12,12 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
+      - name: isfail
+        run: |
+          if [ "${{ github.event.inputs.trigger }}" == "fails" ]
+          then
+            exit 1
+          fi
       - name: Slack
         if: always()
         uses: 8398a7/action-slack@v3.2.0
