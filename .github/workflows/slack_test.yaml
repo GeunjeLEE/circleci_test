@@ -5,6 +5,9 @@ on:
       trigger:
         description: 'lets trigger'
         required: true
+        
+env:
+  SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}
 
 jobs:
   foobar:
@@ -39,5 +42,3 @@ jobs:
           status: ${{job.status}}
           fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
           author_name: Github Action Slack
-        env:
-          SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}
