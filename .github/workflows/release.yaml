@@ -106,7 +106,6 @@ jobs:
           author_name: Github Action Slack
 
   notification:
-    if: github.repository_owner == 'spaceone-dev'
     needs: docker
     runs-on: ubuntu-latest
     steps:

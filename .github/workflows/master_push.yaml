@@ -35,10 +35,9 @@ jobs:
           
   docker:
     needs: versioning
-    if: github.repository_owner == 'spaceone-dev'
     runs-on: ubuntu-latest
     env:
-      VERSION: ${{ needs.versioning.outputs.version }}    
+      VERSION: ${{ needs.versioning.outputs.version }}
     steps:
       - uses: actions/checkout@v2
       - name: temp docker
