@@ -32,6 +32,7 @@ jobs:
           status: ${{job.status}}
           fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
           author_name: Github Action Slack
+          text: condition_check job failed
 
   update_master_branch_version_file:
     needs: condition_check
@@ -85,6 +86,7 @@ jobs:
           status: ${{job.status}}
           fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
           author_name: Github Action Slack
+          text: update_master_branch_version_file job failed
 
   tagging:
     needs: update_master_branch_version_file
@@ -104,6 +106,7 @@ jobs:
           status: ${{job.status}}
           fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
           author_name: Github Action Slack
+          text: tagging job failed
 
   notification:
     needs: tagging
