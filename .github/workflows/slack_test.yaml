@@ -15,6 +15,10 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
+      - name: echo version files
+        run: |
+          a=$(cat src/VERSION)
+          echo $a
       - name: isfail
         id: job
         run: |
