@@ -18,7 +18,7 @@ jobs:
       - name: echo version files
         run: |
           echo "a=$(cat src/VERSION)" >> $GITHUB_ENV
-          if [ ${{ env.a }} == "v1.0.0" ];
+          if [ "${{ env.a }}" == "v1.0.0" ];
           then
             exit 1
           fi
