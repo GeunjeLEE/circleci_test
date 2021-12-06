@@ -30,7 +30,7 @@ jobs:
         uses: 8398a7/action-slack@v3.2.0
         with:
           status: ${{job.status}}
-          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+          fields: repo,workflow,job
           author_name: Github Action Slack
           
   docker:
@@ -53,5 +53,5 @@ jobs:
         uses: 8398a7/action-slack@v3.2.0
         with:
           status: ${{job.status}}
-          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+          fields: repo,message,commit,author,action,ref,workflow,job
           author_name: Github Action Slack

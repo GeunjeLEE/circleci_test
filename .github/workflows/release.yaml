@@ -30,9 +30,8 @@ jobs:
         uses: 8398a7/action-slack@v3.2.0
         with:
           status: ${{job.status}}
-          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+          fields: repo,workflow,job
           author_name: Github Action Slack
-          text: condition_check job failed
 
   update_master_branch_version_file:
     needs: condition_check
@@ -84,9 +83,8 @@ jobs:
         uses: 8398a7/action-slack@v3.2.0
         with:
           status: ${{job.status}}
-          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+          fields: repo,workflow,job
           author_name: Github Action Slack
-          text: update_master_branch_version_file job failed
 
   tagging:
     needs: update_master_branch_version_file
@@ -104,9 +102,8 @@ jobs:
         uses: 8398a7/action-slack@v3.2.0
         with:
           status: ${{job.status}}
-          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+          fields: repo,workflow,job
           author_name: Github Action Slack
-          text: tagging job failed
 
   notification:
     needs: tagging
@@ -117,5 +114,5 @@ jobs:
         uses: 8398a7/action-slack@v3.2.0
         with:
           status: ${{job.status}}
-          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+          fields: repo,message,commit,author,action,ref,workflow,job
           author_name: Github Action Slack
