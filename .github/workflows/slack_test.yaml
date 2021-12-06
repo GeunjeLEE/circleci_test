@@ -18,9 +18,10 @@ jobs:
       - name: echo version files
         run: |
           a=$(cat src/VERSION)
-          echo "b=$(cat src/VERSION)" >> $GITHUB_ENV
-          echo $a
-          echo ${{ env.b }}
+          if [ $(cat src/VERSION) == "v1.0.0" ];
+          then
+            exit 1
+          fi
       - name: isfail
         id: job
         run: |
