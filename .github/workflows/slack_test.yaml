@@ -17,8 +17,8 @@ jobs:
         uses: actions/checkout@v2
       - name: echo version files
         run: |
-          a=$(cat src/VERSION)
-          if [ $a == "v1.0.0" ];
+          echo "a=$(cat src/VERSION)" >> $GITHUB_ENV
+          if [ ${{ env.a }} == "v1.0.0" ];
           then
             exit 1
           fi
