@@ -42,7 +42,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: temp docker
         run: |
-          echo "VERSION=$(echo ${{ env.VERSION }} | cut -c 2-)"
+          echo "VERSION=$(echo ${{ env.VERSION }})"
 
   notification:
     runs-on: ubuntu-latest
