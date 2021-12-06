@@ -32,6 +32,18 @@ jobs:
           status: ${{job.status}}
           fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
           author_name: Github Action Slack
+          
+  docker:
+    needs: [versioning]
+    if: github.repository_owner == 'spaceone-dev'
+    runs-on: ubuntu-latest
+    env:
+      VERSION: ${{ needs.versioning.outputs.version }}    
+    steps:
+      - uses: actions/checkout@v2
+      - name: temp docker
+        run: |
+          echo "VERSION=$(echo ${{ env.TAG }} | cut -c 2-)"
 
   notification:
     runs-on: ubuntu-latest
