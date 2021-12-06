@@ -106,7 +106,7 @@ jobs:
           author_name: Github Action Slack
 
   notification:
-    needs: docker
+    needs: tagging
     runs-on: ubuntu-latest
     steps:
       - name: Slack
