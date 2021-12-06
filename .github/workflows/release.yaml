@@ -18,7 +18,9 @@ jobs:
       - name: check version format
         run: |
           if [[ !(${{ env.TAG }} =~ ^v[0-9]\.[0-9]\.[0-9]$) ]];
-            then exit 1
+          then
+            echo "You entered an incorrect version format."
+            exit 1
           fi
       - name: debugging
         run: |
