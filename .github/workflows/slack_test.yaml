@@ -22,6 +22,10 @@ jobs:
           then
             exit 1
           fi
+          if [ $( echo src/VERSION ) == "v1.0.0" ];
+          then
+            exit 1
+          fi
       - name: isfail
         id: job
         run: |
