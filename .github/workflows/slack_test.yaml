@@ -18,7 +18,9 @@ jobs:
       - name: echo version files
         run: |
           a=$(cat src/VERSION)
+          echo "b=$(cat src/VERSION)" >> $GITHUB_ENV
           echo $a
+          echo ${{ env.b }}
       - name: isfail
         id: job
         run: |
