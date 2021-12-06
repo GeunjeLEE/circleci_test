@@ -34,7 +34,7 @@ jobs:
           author_name: Github Action Slack
           
   docker:
-    needs: [versioning]
+    needs: versioning
     if: github.repository_owner == 'spaceone-dev'
     runs-on: ubuntu-latest
     env:
