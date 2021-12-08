@@ -1,4 +1,4 @@
-name: SpaceONE Review
+name: "SpaceONE Review"
 
 on:
   workflow_dispatch:
