@@ -12,4 +12,4 @@ jobs:
   review:
     runs-on: ubuntu-latest
     steps:
-    - run: ${{ github.repository }}
+    - run: ls
