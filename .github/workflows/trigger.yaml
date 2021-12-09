@@ -13,12 +13,11 @@ jobs:
   review:
     runs-on: ubuntu-latest
     steps:
-      - uses: felixp8/dispatch-and-wait@v0.1.0
+      - uses: actions/checkout@v2
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v1
         with:
-          owner: GeunjeLEE
-          repo: circleci_test
           token: ${{ secrets.PAT_TOKEN }}
-          event_type: test
-          client_payload: '{"ref": "master"}'
-          wait_time: 10
-          max_time: 60
+          repository: GeunjeLEE/circleci_test
+          event-type: release
+          client-payload: '{"tag": "${{ github.event.inputs.tag }}"}'
