@@ -1,0 +1,24 @@
+name: "repository_dispatch_test"
+
+on:
+  workflow_dispatch:
+    trigger:
+      tag:
+        description: 'test'
+        required: true
+        default: bang
+
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: felixp8/dispatch-and-wait@v0.1.0
+        with:
+          owner: GeunjeLEE
+          repo: circleci_test
+          token: ${{ secrets.PAT_TOKEN }}
+          event_type: test
+          client_payload: '{"ref": "master"}'
+          wait_time: 10
+          max_time: 60
