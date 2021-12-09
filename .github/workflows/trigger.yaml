@@ -2,7 +2,7 @@ name: "trigger"
 
 on:
   workflow_dispatch:
-    input:
+    inputs:
       trigger:
         description: 'test'
         required: true
