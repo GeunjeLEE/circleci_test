@@ -20,4 +20,4 @@ jobs:
           token: ${{ secrets.PAT_TOKEN }}
           repository: GeunjeLEE/circleci_test
           event-type: release
-          client-payload: '{"tag": "${{ github.event.inputs.tag }}"}'
+          client-payload: '{"tag": "${{ github.event.inputs.trigger }}"}'
