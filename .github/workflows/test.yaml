@@ -1,0 +1,21 @@
+name: "[CI] deploy workflows"
+
+on:
+  workflow_dispatch:
+    inputs:
+      repository:
+        description: '특정 repository 지정.'
+        required: true
+
+jobs:
+  master_push:
+    runs-on: ubuntu-latest
+    if: ${{ !github.event.inputs.tag }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
+          repository: GeunjeLEE/dummy_plugin
+          event-type: master_push
