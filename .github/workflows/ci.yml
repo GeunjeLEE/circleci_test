@@ -16,10 +16,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: echo
-        run: echo "push"
+        run: echo "${{ github.event_name }}"
   echo_release:
     if: ${{ github.event_name }} == "workflow_dispatch"
     runs-on: ubuntu-latest
     steps:
       - name: echo
-        run: echo "dispatch"
+        run: echo "${{ github.event_name }}"
