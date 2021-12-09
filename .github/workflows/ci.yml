@@ -12,14 +12,12 @@ on:
       
 jobs:
   echo_push:
-    if: ${{ github.event_name }} == "push"
     runs-on: ubuntu-latest
     steps:
-      - name: echo
+      - if: github.event_name  == "push"
+        name: echo
         run: echo "${{ github.event_name }}"
-  echo_release:
-    if: ${{ github.event_name }} == "workflow_dispatch"
-    runs-on: ubuntu-latest
-    steps:
-      - name: echo
+      - if: ${{ github.event_name }} == "workflow_dispatch"
+        name: echo
         run: echo "${{ github.event_name }}"
+
