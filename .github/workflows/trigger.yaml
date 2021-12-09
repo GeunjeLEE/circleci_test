@@ -1,4 +1,4 @@
-name: "repository_dispatch_test"
+name: "trigger"
 
 on:
   workflow_dispatch:
