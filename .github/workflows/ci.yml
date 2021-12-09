@@ -10,3 +10,4 @@ jobs:
     steps:
       - name: echo
         run: echo "ya-ho!"
+      - run: echo "${{ github.event_name }}"
