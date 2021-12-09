@@ -2,8 +2,8 @@ name: "trigger"
 
 on:
   workflow_dispatch:
-    trigger:
-      tag:
+    input:
+      trigger:
         description: 'test'
         required: true
         default: bang
