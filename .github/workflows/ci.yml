@@ -3,11 +3,23 @@ on:
   push:
     branches:
       - master
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: '`vx.y.z` 형태로 버전을 입력해주세요.'
+        required: true
+        default: v1.2.3-rc1
       
 jobs:
-  echo:
+  echo_push:
+    if: ${{ github.event_name }} == "push"
     runs-on: ubuntu-latest
     steps:
       - name: echo
-        run: echo "ya-ho!"
-      - run: echo "${{ github.event_name }}"
+        run: echo "push"
+  echo_release:
+    if: ${{ github.event_name }} == "workflow_dispatch"
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo
+        run: echo "dispatch"
