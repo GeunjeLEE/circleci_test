@@ -17,7 +17,10 @@ jobs:
       - if: github.event_name  == 'push'
         name: echo
         run: echo "${{ github.event_name }}"
-      - if: github.event_name == 'workflow_dispatch'
-        name: echo
-        run: echo "${{ github.event_name }}"
 
+  echo_push_2st:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    steps:
+      - name: echo
+        run: echo "${{ github.event_name }}"
