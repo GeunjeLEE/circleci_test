@@ -3,7 +3,7 @@ name: "trigger"
 on:
   workflow_dispatch:
     inputs:
-      trigger:
+      trigger_test:
         description: 'test'
         required: true
         default: bang
