@@ -16,15 +16,8 @@ env:
   ref: master
 
 jobs:
-  master_push:
-    if: github.event_name == 'push'
+  echo:
     runs-on: ubuntu-latest
     steps:
-      - name: master_push
-        run: echo "master_push"
-  pull_workflows:
-    if: github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
-    steps:
-      - name: git pull
-        run: echo "pull_wf"
+      - name: echo
+        run: echo ${{ github.event.ref }}
