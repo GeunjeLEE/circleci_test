@@ -22,4 +22,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: echo
+        if: ${{ github.event.ref }} =~ 'branch'
         run: echo ${{ github.event.ref }}
