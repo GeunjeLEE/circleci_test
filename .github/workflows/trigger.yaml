@@ -43,9 +43,9 @@ jobs:
       - name: get versions
         run: |
           echo "old_version=v1.3.9" >> $GITHUB_ENV
-          echo "old_major=$(echo ${{ env.old_version }} | cut -c 2- | cut -d'.' -f1)" >> $GITHUB_ENV
-          echo "old_minor=$(echo ${{ env.old_version }} | cut -c 2- | cut -d'.' -f2)" >> $GITHUB_ENV
-          echo "old_patch=$(echo ${{ env.old_version }} | cut -c 2- | cut -d'.' -f3)" >> $GITHUB_ENV
+          echo "old_major=1" >> $GITHUB_ENV
+          echo "old_minor=3" >> $GITHUB_ENV
+          echo "old_patch=9" >> $GITHUB_ENV
           echo "new_major=$(echo ${{ env.TAG }} | cut -c 2- | cut -d'.' -f1)" >> $GITHUB_ENV
           echo "new_minor=$(echo ${{ env.TAG }} | cut -c 2- | cut -d'.' -f2)" >> $GITHUB_ENV
           echo "new_patch=$(echo ${{ env.TAG }} | cut -c 2- | cut -d'.' -f3)" >> $GITHUB_ENV
