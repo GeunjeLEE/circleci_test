@@ -1,23 +1,87 @@
-name: "trigger"
+name: "[Dispatch] Release"
 
 on:
   workflow_dispatch:
     inputs:
-      trigger_test:
-        description: 'test'
+      tag:
+        description: '`vx.y.z` 형태로 버전을 입력해주세요.'
         required: true
-        default: bang
+        default: v1.0.0
 
+env:
+  TAG: ${{ github.event.inputs.tag }}
+  SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}
 
 jobs:
-  review:
+  condition_check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: check version format
+        run: |
+          if [[ !(${{ env.TAG }} =~ ^v[0-9]\.[0-9]?[0-9]\.[0-9]?[0-9]$) ]];
+          then
+            echo "You entered an incorrect version format."
+            exit 1
+          fi
+      - name: debugging
+        run: |
+          echo "major=$(echo ${{env.TAG}} | cut -c 2- | cut -d'.' -f1)"
+          echo "minor=$(echo ${{env.TAG}} | cut -c 2- | cut -d'.' -f2)"
+          echo "patch=$(echo ${{env.TAG}} | cut -c 2- | cut -d'.' -f3)"
+      - name: notice when job fails
+        if: failure()
+        uses: 8398a7/action-slack@v3.2.0
+        with:
+          status: ${{job.status}}
+          fields: repo,workflow,job
+          author_name: Github Action Slack
+
+  update_master_branch_version_file:
+    needs: condition_check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v1
         with:
           token: ${{ secrets.PAT_TOKEN }}
-          repository: GeunjeLEE/circleci_test
-          event-type: release
-          client-payload: '{"tag": "${{ github.event.inputs.trigger }}"}'
+      - name: get versions
+        run: |
+          echo "old_version=v1.3.9" >> $GITHUB_ENV
+          echo "old_major=$(cat src/VERSION | cut -c 2- | cut -d'.' -f1)" >> $GITHUB_ENV
+          echo "old_minor=$(cat src/VERSION | cut -c 2- | cut -d'.' -f2)" >> $GITHUB_ENV
+          echo "old_patch=$(cat src/VERSION | cut -c 2- | cut -d'.' -f3)" >> $GITHUB_ENV
+          echo "new_major=$(echo ${{ env.TAG }} | cut -c 2- | cut -d'.' -f1)" >> $GITHUB_ENV
+          echo "new_minor=$(echo ${{ env.TAG }} | cut -c 2- | cut -d'.' -f2)" >> $GITHUB_ENV
+          echo "new_patch=$(echo ${{ env.TAG }} | cut -c 2- | cut -d'.' -f3)" >> $GITHUB_ENV
+      - name: compare versions
+        run: |
+          if [ ${{ env.TAG }} == ${{ env.old_version }} ];
+          then
+            echo "New version cannot be the same as old version."
+            exit 1
+          elif [ ${{ env.old_major }} \> ${{ env.new_major }} ];
+          then
+            echo "Old major version cannot be greater than new major version"
+            exit 1
+          elif [ ${{ env.old_minor }} \> ${{ env.new_minor }} ];
+          then
+            echo "Old minor version cannot be greater than new minor version"
+            exit 1
+          elif [ ${{ env.old_minor }} == ${{ env.new_minor }} ];
+          then
+            if [ ${{ env.old_patch }} \> ${{ env.new_patch }} ];
+            then
+              echo "Old patch version cannot be greater than new patch version in same minor version"
+              exit 1
+            else
+              echo "version=${{ env.TAG }}"
+            fi
+          else
+            echo "version=${{ env.TAG }}"
+          fi
+      - name: notice when job fails
+        if: failure()
+        uses: 8398a7/action-slack@v3.2.0
+        with:
+          status: ${{job.status}}
+          fields: repo,workflow,job
+          author_name: Github Action Slack
