@@ -40,9 +40,6 @@ jobs:
     needs: condition_check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.PAT_TOKEN }}
       - name: get versions
         run: |
           echo "old_version=v1.3.9" >> $GITHUB_ENV
