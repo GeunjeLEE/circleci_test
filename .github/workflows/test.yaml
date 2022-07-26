@@ -19,7 +19,7 @@ env:
 
 jobs:
   owner_check:
-    if: github.repository_owner == 'GeunjeLEE'
+    if: github.repository_owner == 'GeunjeLE'
     runs-on: ubuntu-latest
     steps:
       - run: echo ${{ github.repository_owner }}
