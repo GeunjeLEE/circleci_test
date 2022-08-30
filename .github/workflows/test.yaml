@@ -42,7 +42,7 @@ jobs:
       - run: echo ${{ github.repository_owner }}
   owner_check_6:
     runs-on: ubuntu-latest
-    needs: owner_check_4
+    needs: owner_check
     steps:
       - run: echo ${{ github.repository_owner }}
   owner_check_7:
