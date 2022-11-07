@@ -1,0 +1,10 @@
+name: "[self-runner] test"
+
+on:
+  workflow_dispatch:
+  
+jobs:
+  echo:
+    runs-on: [self-hosted, Linux, ARM64]
+    steps:
+      - run: echo ${{ github.repository_owner }}
