@@ -2,10 +2,9 @@ name: "[buildx] multi platform"
 
 on:
   workflow_dispatch:
-    input:
-      inputs:
-        version:
-          description: tag version
+    inputs:
+      version:
+        description: tag version
 
 jobs:
   buildx:
