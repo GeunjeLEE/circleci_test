@@ -1,0 +1,38 @@
+name: "[buildx] multi platform"
+
+on:
+  workflow_dispatch:
+    input:
+      inputs:
+        version:
+          description: tag version
+
+jobs:
+  buildx:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@3
+      
+      - name: set up QEMU
+        uses: docker/setup-qemu-action@2
+
+      - name: set up Docker Buildx
+        uses: docker/setup-buildx-action@2
+        with:
+          version: v0.10.2 # builx version
+          platforms: linux/arm64, linux/amd64, linux/amd64/v2, linux/riscv64, linux/ppc64le, linux/s390x, linux/386, linux/mips64le, linux/mips64, linux/arm/v7, linux/arm/v6
+
+      - name: Login to Docker HUB
+        uses: docker/login-action@2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and Push
+        uses: docker/build-push-action@3
+        with:
+          context: .
+          platforms: linux/arm64, linux/amd64, linux/amd64/v2, linux/riscv64, linux/ppc64le, linux/s390x, linux/386, linux/mips64le, linux/mips64, linux/arm/v7, linux/arm/v6
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_APP_NAME }}:${{ github.event.inputs.tag }}
