@@ -28,8 +28,11 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and Tag image
-        run: docker buildx build . --platform linux/amd64,linux/arm64,linux/arm/v7 -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_APP_NAME }}:${{ github.event.inputs.version }}
+      - name: Build and output into local
+        run: docker buildx build . --platform linux/amd64,linux/arm64,linux/arm/v7 -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_APP_NAME }}:${{ github.event.inputs.version }} --output type=tar,dest=./output.tar
+
+      - name: Import compressed docker image
+        run: tar -c . | docker import - ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_APP_NAME }}:${{ github.event.inputs.version }}
 
       - name: Scan image
         uses: Azure/container-scan@v0
