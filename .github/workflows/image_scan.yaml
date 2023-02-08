@@ -35,11 +35,9 @@ jobs:
         run: tar -c output.tar | docker import - ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_APP_NAME }}:${{ github.event.inputs.version }}
 
       - name: Scan image
-        uses: Azure/container-scan@v0
+        uses: anchore/scan-action@v3
         with:
-          image-name: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_APP_NAME }}:${{ github.event.inputs.version }}
-          severity-threshold: LOW
-          run-quality-checks: true
+          image: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_APP_NAME }}:${{ github.event.inputs.version }}
 
       # - name: Build and Push
       #   uses: docker/build-push-action@v3
