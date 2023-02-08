@@ -38,6 +38,7 @@ jobs:
         uses: anchore/scan-action@v3
         with:
           image: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_APP_NAME }}:${{ github.event.inputs.version }}
+          output-format: table
 
       # - name: Build and Push
       #   uses: docker/build-push-action@v3
