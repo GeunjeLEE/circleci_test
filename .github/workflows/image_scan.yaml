@@ -32,7 +32,7 @@ jobs:
         run: docker buildx build . --platform linux/amd64,linux/arm64,linux/arm/v7 -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_APP_NAME }}:${{ github.event.inputs.version }} --output type=tar,dest=./output.tar
 
       - name: Import compressed docker image
-        run: tar -c . | docker import - ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_APP_NAME }}:${{ github.event.inputs.version }}
+        run: tar -c output.tar | docker import - ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_APP_NAME }}:${{ github.event.inputs.version }}
 
       - name: Scan image
         uses: Azure/container-scan@v0
