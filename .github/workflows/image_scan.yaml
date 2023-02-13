@@ -3,8 +3,8 @@ name: "[test] image scan"
 on:
   workflow_dispatch:
     inputs:
-      version:
-        description: image version
+      image:
+        description: image name and version
 jobs:
   buildx:
     runs-on: ubuntu-latest
@@ -30,7 +30,7 @@ jobs:
       - name: Scan image
         uses: anchore/scan-action@v3
         with:
-          image: pyengine/plugin-aws-cloud-service-inven-collector:1.15.2.20230213.170246
+          image: ${{ github.event.inputs.image }}
           output-format: table
 #           registry-username: ${{ secrets.DOCKERHUB_USERNAME }}
 #           registry-password: ${{ secrets.DOCKERHUB_TOKEN }}
