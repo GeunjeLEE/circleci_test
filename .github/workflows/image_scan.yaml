@@ -32,4 +32,6 @@ jobs:
         with:
           image: plugin-aws-cloud-service-inven-collector:1.15.2
           output-format: table
+          registry-username: ${{ secrets.DOCKERHUB_USERNAME }}
+          registry-password: ${{ secrets.DOCKERHUB_TOKEN }}
 
