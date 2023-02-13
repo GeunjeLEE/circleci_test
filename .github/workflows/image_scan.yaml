@@ -30,7 +30,7 @@ jobs:
       - name: Scan image
         uses: anchore/scan-action@v3
         with:
-          image: spaceone/identity:1.11.0
+          image: python:3
           output-format: table
 #           registry-username: ${{ secrets.DOCKERHUB_USERNAME }}
 #           registry-password: ${{ secrets.DOCKERHUB_TOKEN }}
