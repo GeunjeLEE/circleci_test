@@ -30,7 +30,7 @@ jobs:
       - name: Scan image
         uses: anchore/scan-action@v3
         with:
-          image: python:3
+          image: spaceone/plugin-aws-cloud-service-inven-collector:1.15.3
           output-format: table
 #           registry-username: ${{ secrets.DOCKERHUB_USERNAME }}
 #           registry-password: ${{ secrets.DOCKERHUB_TOKEN }}
