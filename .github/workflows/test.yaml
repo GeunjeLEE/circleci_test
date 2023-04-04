@@ -24,4 +24,5 @@ jobs:
           commit_user_name: geunje
           commit_user_email: geunje@hogehoge.com
           commit_author: geunje <geunje@hogehoge.com>
+          push_options: '--force'
           tagging_message: 'v1.0.0'
