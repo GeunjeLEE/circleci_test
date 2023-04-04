@@ -1,0 +1,27 @@
+name: "test"
+
+on:
+  workflow_dispatch:
+
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ env.BRANCH }}
+
+      - run: |
+          touch test.yaml
+          echo "hello" >> test.yaml
+      - name: Push artifacts to origin master
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          branch: master
+          commit_message: "[CI] API artifacts have been built"
+          commit_user_name: geunje
+          commit_user_email: geunje@hogehoge.com
+          commit_author: geunje <geunje@hogehoge.com>
+          tagging_message: 'v1.0.0'
