@@ -11,21 +11,4 @@ jobs:
       contents: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ env.BRANCH }}
-          token: ${{ secrets.PAT_TOKEN }}
-
-      - run: |
-          touch test.yaml
-          echo "hello" >> test.yaml
-      - name: Push artifacts to origin master
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          branch: master
-          commit_message: "[CI] API artifacts have been built"
-          commit_user_name: geunje
-          commit_user_email: geunje@hogehoge.com
-          commit_author: geunje <geunje@hogehoge.com>
-          push_options: '--force'
-          tagging_message: 'v1.0.0'
+        run: echo ${{ github.event.repository.name }}
