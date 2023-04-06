@@ -1,4 +1,4 @@
-name: [scan] trivy test
+name: "[scan] trivy test"
 
 on:
   workflow_dispatch:
