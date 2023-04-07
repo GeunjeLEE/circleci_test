@@ -35,7 +35,7 @@ jobs:
                   },
                   {
                     "type": "mrkdwn",
-                    "text": "*Repo:*\n${process.env.AS_REPO}"
+                    "text": "*Repo:*\n${{ github.repositoryUrl }}"
                   }
                 ]
               },
