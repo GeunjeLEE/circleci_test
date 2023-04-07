@@ -15,34 +15,32 @@ jobs:
     steps:
     - uses: 8398a7/action-slack@v3
       with:
-        status: custom
+        status: ${{job.status}}
         custom_payload: |
           {
-            text: "Custom Field Check",
-            attachments: [{
-              "author_name": "8398a7@action-slack", // json
-              fallback: 'fallback',
-              color: 'good',
-              title: 'CI Result',
-              text: 'Succeeded',
-              fields: [{
-                title: 'lower case',
-                value: 'LOWER CASE CHECK'.toLowerCase(),
-                short: true
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*image vulnerability detected*"
+                }
               },
               {
-                title: 'reverse',
-                value: 'gnirts esrever'.split('').reverse().join(''),
-                short: true
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*Image:*\nPaid time off"
+                }
               },
               {
-                title: 'long title1',
-                value: 'long value1',
-                short: false
-              }],
-              actions: [{
-              }]
-            }]
-          }      
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*Result*: \n hogehoge"
+                }
+              }
+            ]
+          } 
       env:
         SLACK_WEBHOOK_URL: ${{secrets.VULNERABILITY_SLACK_WEBHOOK_URL}} 
