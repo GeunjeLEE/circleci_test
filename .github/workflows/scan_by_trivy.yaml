@@ -7,8 +7,12 @@ on:
         description: image name and version
 
 jobs:
-  build:
-    name: Build
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: docker
+        run: echo "This step will be implemeted docker build"
+  scan:
     runs-on: ubuntu-20.04
     steps:
       - name: Run Trivy vulnerability scanner
@@ -20,3 +24,9 @@ jobs:
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
+          
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: slack
+        run: echo "this step will be implemented notify message to slack"
