@@ -13,6 +13,7 @@ jobs:
       - name: docker
         run: echo "This step will be implemeted docker build"
   scan:
+    needs: docker
     runs-on: ubuntu-20.04
     steps:
       - name: Run Trivy vulnerability scanner
@@ -26,6 +27,7 @@ jobs:
           severity: 'CRITICAL,HIGH'
           
   notify:
+    needs: docker
     runs-on: ubuntu-latest
     steps:
       - name: slack
