@@ -24,20 +24,30 @@ jobs:
         with:
           image-ref: ${{ github.event.inputs.image }}
           format: 'table'
+          output: /tmp/result.txt
           exit-code: '1'
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
           
-      - name: Notice when job fails
-        if: failure()
-        uses: 8398a7/action-slack@v3.15.0
+      - name: slack
+        uses: 8398a7/action-slack@v3
         with:
-          status: ${{job.status}}
-          fields: repo,workflow,job
-          author_name: Github Action Slack
+          status: custom
+          custom_payload: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "$(echo /tmp/result.txt)"
+                  }
+                }
+              ]
+            }
         env:
-          SLACK_WEBHOOK_URL: ${{secrets.VULNERABILITY_SLACK_WEBHOOK_URL}}
+          SLACK_WEBHOOK_URL: ${{secrets.VULNERABILITY_SLACK_WEBHOOK_URL}} 
           
   notify:
     needs: docker
