@@ -16,17 +16,11 @@ jobs:
     - uses: 8398a7/action-slack@v3
       with:
         status: custom
-        author_name: Github Action Slack
-        fields: repo
         custom_payload: |
           {
-            text: "Custom Field Check",
             attachments: [{
-              "author_name": "8398a7@action-slack", // json
-              fallback: 'fallback',
-              color: 'good',
-              title: 'CI Result',
-              text: 'Succeeded',
+              "author_name": Trivy Image Scanner
+              color: 'warning',
               fields: [{
                 title: 'lower case',
                 value: 'LOWER CASE CHECK'.toLowerCase(),
@@ -42,8 +36,6 @@ jobs:
                 value: 'long value1',
                 short: false
               }],
-              actions: [{
-              }]
             }]
           }      
       env:
