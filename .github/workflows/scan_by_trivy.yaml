@@ -7,7 +7,7 @@ on:
         description: image name and version
         
 env:
-  SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}}
+  SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}
 
 jobs:
   docker:
