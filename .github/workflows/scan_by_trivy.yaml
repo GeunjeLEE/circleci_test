@@ -58,7 +58,7 @@ jobs:
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*Detail:*\n${{ github.job }}"
+                      "text": "*Detail:*\n${process.env.AS_WORKFLOW_RUN}"
                     }
                   ]
                 }
