@@ -18,8 +18,8 @@ jobs:
         status: custom
         custom_payload: |
           {
+            author_name: Trivy Image Scanner
             attachments: [{
-              "author_name": Trivy Image Scanner
               color: 'warning',
               fields: [{
                 title: 'lower case',
