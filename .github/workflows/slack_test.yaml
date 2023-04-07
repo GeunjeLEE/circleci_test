@@ -18,25 +18,65 @@ jobs:
         status: custom
         custom_payload: |
           {
-            author_name: Trivy Image Scanner
-            attachments: [{
-              color: 'warning',
-              fields: [{
-                title: 'lower case',
-                value: 'LOWER CASE CHECK'.toLowerCase(),
-                short: true
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "You have a new request:\n*<fakeLink.toEmployeeProfile.com|Fred Enriquez - New device request>*"
+                }
               },
               {
-                title: 'reverse',
-                value: 'gnirts esrever'.split('').reverse().join(''),
-                short: true
+                "type": "section",
+                "fields": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Type:*\nComputer (laptop)"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "*When:*\nSubmitted Aut 10"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Last Update:*\nMar 10, 2015 (3 years, 5 months)"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Reason:*\nAll vowel keys aren't working."
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Specs:*\n\"Cheetah Pro 15\" - Fast, really fast\""
+                  }
+                ]
               },
               {
-                title: 'long title1',
-                value: 'long value1',
-                short: false
-              }],
-            }]
-          }      
+                "type": "actions",
+                "elements": [
+                  {
+                    "type": "button",
+                    "text": {
+                      "type": "plain_text",
+                      "emoji": true,
+                      "text": "Approve"
+                    },
+                    "style": "primary",
+                    "value": "click_me_123"
+                  },
+                  {
+                    "type": "button",
+                    "text": {
+                      "type": "plain_text",
+                      "emoji": true,
+                      "text": "Deny"
+                    },
+                    "style": "danger",
+                    "value": "click_me_123"
+                  }
+                ]
+              }
+            ]
+          }
       env:
         SLACK_WEBHOOK_URL: ${{secrets.VULNERABILITY_SLACK_WEBHOOK_URL}} 
