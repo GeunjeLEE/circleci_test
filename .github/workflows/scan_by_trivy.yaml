@@ -5,6 +5,9 @@ on:
     inputs:
       image:
         description: image name and version
+        
+env:
+  SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}}
 
 jobs:
   docker:
@@ -25,6 +28,16 @@ jobs:
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
+          
+      - name: Notice when job fails
+        if: failure()
+        uses: 8398a7/action-slack@v3.15.0
+        with:
+          status: ${{job.status}}
+          fields: repo,workflow,job
+          author_name: Github Action Slack
+        env:
+          SLACK_WEBHOOK_URL: ${{secrets.VULNERABILITY_SLACK_WEBHOOK_URL}}
           
   notify:
     needs: docker
