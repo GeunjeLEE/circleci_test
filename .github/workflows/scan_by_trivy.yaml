@@ -77,4 +77,3 @@ jobs:
       - name: slack
         run: echo "this step will be implemented notify message to slack"
 
-https://github.com/GeunjeLEE/circleci_test/security/code-scanning
