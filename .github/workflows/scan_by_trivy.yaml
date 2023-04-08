@@ -15,7 +15,6 @@ jobs:
     steps:
       - name: docker
         run: echo "This step will be implemeted docker build"
-        
   scan:
     needs: docker
     runs-on: ubuntu-20.04
@@ -24,17 +23,52 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: ${{ github.event.inputs.image }}
-          format: 'sarif'
+          format: 'table'
           output: 'trivy-results.sarif'
           exit-code: '1'
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
+
       - name: Upload Trivy scan results to GitHub Security tab
+        if: always()
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: 'trivy-results.sarif'
-          
+
+      - name: slack
+        if: failure()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          fields: workflowRun
+          custom_payload: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": ":warning: Image vulnerability detected"
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Image:*\n${{ github.event.inputs.image }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Security tag:*\nhttps://github.com/${{ github.repository }}/security/code-scanning"
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{secrets.VULNERABILITY_SLACK_WEBHOOK_URL}} 
           
   notify:
     needs: docker
@@ -42,3 +76,5 @@ jobs:
     steps:
       - name: slack
         run: echo "this step will be implemented notify message to slack"
+
+https://github.com/GeunjeLEE/circleci_test/security/code-scanning
