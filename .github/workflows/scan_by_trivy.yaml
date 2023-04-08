@@ -58,7 +58,22 @@ jobs:
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*Security tag:*\nhttps://github.com/${{ github.repository }}/security/code-scanning"
+                      "text": "*Repo name:*\n${{ github.repository }}"
+                    }
+                  ]
+                },
+                {
+                  "type": "actions",
+                  "elements": [
+                    {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "emoji": true,
+                        "text": "View Detail"
+                      },
+                      "style": "danger",
+                      "url": "https://github.com/${{ github.repository }}/security/code-scanning"
                     }
                   ]
                 }
