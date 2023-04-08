@@ -15,6 +15,7 @@ jobs:
     steps:
       - name: docker
         run: echo "This step will be implemeted docker build"
+        
   scan:
     needs: docker
     runs-on: ubuntu-20.04
@@ -23,50 +24,17 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: ${{ github.event.inputs.image }}
-          format: 'table'
-          output: /tmp/result.txt
+          format: 'sarif'
+          output: 'trivy-results.sarif'
           exit-code: '1'
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
-          
-      - name: Set Result to ENV
-        run: |
-          echo "$(cat /tmp/result.txt) : ${{ vars.IMAGE_SCAN_RESULT }}"
-          
-      - name: slack
-        if: failure()
-        uses: 8398a7/action-slack@v3
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
         with:
-          status: custom
-          fields: workflowRun
-          custom_payload: |
-            {
-              "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": ":warning: Image vulnerability detected"
-                  }
-                },
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Image:*\n${{ github.event.inputs.image }}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Detail:*\n${process.env.AS_WORKFLOW_RUN}"
-                    }
-                  ]
-                }
-              ]
-            }
-        env:
-          SLACK_WEBHOOK_URL: ${{secrets.VULNERABILITY_SLACK_WEBHOOK_URL}} 
+          sarif_file: 'trivy-results.sarif'
+          
           
   notify:
     needs: docker
