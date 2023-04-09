@@ -31,7 +31,7 @@ jobs:
 
       - name: Check Trivy result with jq
         run: |
-          echo "$(cat trivy-results.sarif | jq '.runs[].results')" >> $GITHUB_ENV
+          echo "trivy-result=$(cat trivy-results.sarif | jq '.runs[].results')" >> $GITHUB_ENV
 
       - name: Upload Trivy scan results to GitHub Security tab
         if: ${{ env.trivy-result }} == "[]"
