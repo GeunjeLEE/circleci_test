@@ -29,12 +29,24 @@ jobs:
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
 
+    - name: Check Trivy result with jq
+      run: |
+        result=$(cat trivy-results.sarif | jq -r '.runs[].results')
+
+        if [[ -z $result ]]; then
+          echo "trivy-result=true" >> $GITHUB_ENV
+        else
+          echo "trivy-result=false" >> $GITHUB_ENV
+        fi
+
       - name: Upload Trivy scan results to GitHub Security tab
+        if: ${{ env.trivy-result }} == 'true'
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: 'trivy-results.sarif'
 
       - name: slack
+        if: ${{ env.trivy-result }} == 'true'
         uses: 8398a7/action-slack@v3
         with:
           status: custom
@@ -88,4 +100,3 @@ jobs:
     steps:
       - name: slack
         run: echo "this step will be implemented notify message to slack"
-
