@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Run Trivy vulnerability scanner
-        if: trivy-scan
+        id: trivy-scan
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: ${{ github.event.inputs.image }}
@@ -31,13 +31,13 @@ jobs:
           severity: 'CRITICAL,HIGH'
 
       - name: Upload Trivy scan results to GitHub Security tab
-        if: steps.trivy-scan.outputs.vulnerabilities != '[]'
+        if:  steps.trivy-scan.outputs.vulnerabilities != '[]'
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: 'trivy-results.sarif'
 
       - name: slack
-        if: steps.trivy-scan.outputs.vulnerabilities != '[]'
+        if:  steps.trivy-scan.outputs.vulnerabilities != '[]'
         uses: 8398a7/action-slack@v3
         with:
           status: custom
