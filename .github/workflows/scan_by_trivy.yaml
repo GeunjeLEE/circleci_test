@@ -29,15 +29,15 @@ jobs:
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
 
-    - name: Check Trivy result with jq
-      run: |
-        result=$(cat trivy-results.sarif | jq -r '.runs[].results')
+      - name: Check Trivy result with jq
+        run: |
+          result=$(cat trivy-results.sarif | jq -r '.runs[].results')
 
-        if [[ -z $result ]]; then
-          echo "trivy-result=true" >> $GITHUB_ENV
-        else
-          echo "trivy-result=false" >> $GITHUB_ENV
-        fi
+          if [[ -z $result ]]; then
+            echo "trivy-result=true" >> $GITHUB_ENV
+          else
+            echo "trivy-result=false" >> $GITHUB_ENV
+          fi
 
       - name: Upload Trivy scan results to GitHub Security tab
         if: ${{ env.trivy-result }} == 'true'
