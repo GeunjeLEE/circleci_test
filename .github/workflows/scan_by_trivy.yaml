@@ -30,14 +30,20 @@ jobs:
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
 
+      - name: Define vulnerabilities variable
+        id: vulnerabilities
+        run: |
+          vulnerabilities=$(jq -r '.runs[].results' ./trivy-results.sarif)
+          echo "vulnerabilities=$vulnerabilities" >> $GITHUB_ENV
+
       - name: Upload Trivy scan results to GitHub Security tab
-        if:  steps.trivy-scan.outputs.vulnerabilities != '[]'
+        if:  ${{ env.vulnerabilities }} != '[]'
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: 'trivy-results.sarif'
 
       - name: slack
-        if:  steps.trivy-scan.outputs.vulnerabilities != '[]'
+        if:  ${{ env.vulnerabilities }} != '[]'
         uses: 8398a7/action-slack@v3
         with:
           status: custom
