@@ -34,16 +34,16 @@ jobs:
         id: vulnerabilities
         run: |
           vulnerabilities=$(jq -r '.runs[].results[].ruleId' ./trivy-results.sarif)
-          echo "vulnerabilities=$vulnerabilities" >> $GITHUB_ENV
+          echo "vulnerabilities=$vulnerabilities" >> $GITHUB_OUTPUT
 
       - name: Upload Trivy scan results to GitHub Security tab
-        if:  ${{ env.vulnerabilities }} != ""
+        if:  ${{ steps.vulnerabilities.outputs.vulnerabilities }} != ""
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: 'trivy-results.sarif'
 
       - name: slack
-        if:  ${{ env.vulnerabilities }} != ""
+        if:  ${{ steps.vulnerabilities.outputs.vulnerabilities }} != ""
         uses: 8398a7/action-slack@v3
         with:
           status: custom
