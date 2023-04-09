@@ -31,22 +31,16 @@ jobs:
 
       - name: Check Trivy result with jq
         run: |
-          result=$(cat trivy-results.sarif | jq -r '.runs[].results')
-
-          if [[ -z $result ]]; then
-            echo "trivy-result=true" >> $GITHUB_ENV
-          else
-            echo "trivy-result=false" >> $GITHUB_ENV
-          fi
+          echo "$(cat trivy-results.sarif | jq '.runs[].results')" >> $GITHUB_ENV
 
       - name: Upload Trivy scan results to GitHub Security tab
-        if: ${{ env.trivy-result }} == 'true'
+        if: ${{ env.trivy-result }} == "[]"
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: 'trivy-results.sarif'
 
       - name: slack
-        if: ${{ env.trivy-result }} == 'true'
+        if: ${{ env.trivy-result }} == "[]"
         uses: 8398a7/action-slack@v3
         with:
           status: custom
