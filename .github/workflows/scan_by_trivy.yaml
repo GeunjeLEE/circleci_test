@@ -38,7 +38,7 @@ jobs:
       - name: Count vulnerabilities
         id: vulnerabilities
         run: |
-          count=$(jq -r '.runs[].results[].ruleId' ./trivy-results.sarif | wc -c)
+          count=$(jq '.runs[].results[].ruleId' ./trivy-results.sarif | wc -c)
           echo "result_count=$count" >> $GITHUB_OUTPUT
 
       - name: slack
