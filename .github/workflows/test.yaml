@@ -9,6 +9,9 @@ jobs:
   echo:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        
       - name: Push artifacts to origin master
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
