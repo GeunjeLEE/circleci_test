@@ -18,4 +18,4 @@ jobs:
           commit_user_email: nigasa12@gmail.com
           commit_author: GeunjeLEE <nigasa12@gmail.com>
           push_options: '--force'
-          tagging_message: v1.0.0
+          tagging_message: v10.0.0
