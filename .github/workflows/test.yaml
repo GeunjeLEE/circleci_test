@@ -9,5 +9,13 @@ jobs:
   echo:
     runs-on: ubuntu-latest
     steps:
-      - name: echo
-        run: echo ${{ github.event.repository.name }}
+      - name: Push artifacts to origin master
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          branch: master
+          commit_message: "[CI] api has been built"
+          commit_user_name: GeunjeLEE
+          commit_user_email: nigasa12@gmail.com
+          commit_author: GeunjeLEE <nigasa12@gmail.com>
+          push_options: '--force'
+          tagging_message: v1.0.0
