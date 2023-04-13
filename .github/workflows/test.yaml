@@ -6,34 +6,8 @@ on:
       image:
         description: image name and version
 jobs:
-  docker:
+  echo:
     runs-on: ubuntu-latest
     steps:
-      - name: docker
-        run: echo "This step will be implemeted docker build"
-  scan:
-    needs: docker
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-#       - name: Run Trivy vulnerability scanner
-#         id: trivy-scan
-#         uses: aquasecurity/trivy-action@master
-#         with:
-#           image-ref: ${{ github.event.inputs.image }}
-#           format: 'sarif'
-#           output: 'trivy-results.sarif'
-#           ignore-unfixed: true
-#           vuln-type: 'os,library'
-#           severity: 'CRITICAL,HIGH'
-
-      - name: Define vulnerabilities variable
-        id: vulnerabilities
-        run: |
-          vulnerabilities=$(cat ./test.yaml)
-          echo "vulnerabilities=$vulnerabilities" >> $GITHUB_OUTPUT
-          
       - name: echo
-        run: |
-          echo ${{ steps.vulnerabilities.outputs.vulnerabilities }}
+        run: echo ${{ github.event.repository.name }}
