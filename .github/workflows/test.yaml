@@ -9,10 +9,11 @@ jobs:
   echo:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        
-      - name: tagging
-        run: |
-          git tag v1.10.0
-          git push origin v1.10.0 
+    - name: Copy
+      uses: andstor/copycat-action@v3
+      with:
+        personal_token: ${{ secrets.PAT_TOKEN }}
+        src_path: dist/
+        dst_path: /.
+        dst_owner: GJ-playgroud
+        dst_repo_name: plugin-test
