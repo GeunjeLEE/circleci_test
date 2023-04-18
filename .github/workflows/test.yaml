@@ -14,6 +14,8 @@ jobs:
       with:
         personal_token: ${{ secrets.PAT_TOKEN }}
         src_path: dist/
+        src_branch: test/github-action-build
+        dst_branch: test/github-actions-build
         dst_path: /.
         dst_owner: GJ-playgroud
         dst_repo_name: plugin-test
