@@ -17,10 +17,11 @@ jobs:
           REPOS=$(curl -s -H "Authorization: token $token" "$API_URL?$QUERY" | jq -r '.[].full_name')
           echo 'repos:{\"repos\":$REPOS}' >> $GITHUB_OUTPUT
   build:
+    needs: ['get_repos']
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        repo: ${{ fromJson(steps.get_repos.outputs.repos) }}
+        repo: ${{ fromJson(needs.get_repos.outputs.repos) }}
     steps:
       - name: Build
         run: |
