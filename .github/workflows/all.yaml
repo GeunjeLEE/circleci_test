@@ -11,7 +11,7 @@ jobs:
       - name: Set repos JSON
         id: set_repos
         run: |
-          QUERY="q=org:cloudforet-io+topic:core"
+          QUERY="q=org:GJ-playgroud+topic:core"
           TOKEN="${{ secrets.PAT+TOKEN  }}"
           API_URL="https://api.github.com/search/repositories"
           REPOS=$(curl -s -H "Authorization: token $token" "$API_URL?$QUERY" | jq -r '.[].full_name')
