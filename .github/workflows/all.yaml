@@ -12,7 +12,7 @@ jobs:
         id: set_repos
         run: |
           QUERY="q=org:GJ-playgroud+topic:core"
-          TOKEN="${{ secrets.PAT+TOKEN  }}"
+          TOKEN="${{ secrets.PAT_TOKEN  }}"
           API_URL="https://api.github.com/search/repositories"
           REPOS=$(curl -s -H "Authorization: token $token" "$API_URL?$QUERY" | jq -r '.[].full_name')
           echo 'repos:{\"repos\":$REPOS}' >> $GITHUB_OUTPUT
