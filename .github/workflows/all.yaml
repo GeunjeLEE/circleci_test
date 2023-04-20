@@ -10,9 +10,10 @@ jobs:
         id: search-repositories
         uses: octokit/request-action@v2.x
         with:
-          route: GET /search/repositories?q=org:GJ-playgroud+topic:core
+          route: GET /search/repositories
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+          INPUT_Q: 'org:GJ-playgroud+topic:core'
       - name: Set output variable
         id: set-output-variable
         run: |
