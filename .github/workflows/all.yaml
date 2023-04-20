@@ -16,6 +16,7 @@ jobs:
       - name: Set output variable
         id: set-output-variable
         run: |
+          echo "result: ${{ steps.search-repositories.outputs.data }}"
           echo "repos=$(echo '${{ steps.search-repositories.outputs.data }}' | jq -r '.items[].full_name' | paste -sd "," -)" >> $GITHUB_OUTPUT
           
 
