@@ -5,6 +5,8 @@ on:
 jobs:
   search-repositories:
     runs-on: ubuntu-latest
+    outputs:
+      repos: ${{ steps.set-output-variable.outputs.repos }}
     steps:
       - name: Search repositories with GitHub API
         id: search-repositories
@@ -18,7 +20,7 @@ jobs:
         id: set-output-variable
         run: |
           echo "repos=$(echo '${{ steps.search-repositories.outputs.data }}' | jq -r '.items[].full_name' | paste -sd "," -)" >> $GITHUB_OUTPUT
-          echo $repo
+          echo ${{ steps.set-output-variable.outputs.repos }}
           
 
   echo:
