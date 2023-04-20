@@ -3,37 +3,28 @@ on:
   workflow_dispatch:
         
 jobs:
-  get_repos:
+  search-repositories:
     runs-on: ubuntu-latest
-    outputs:
-      repos: ${{ steps.set_repos.outputs.repos }}
     steps:
-      - name: Set repos JSON
-        id: set_repos
+      - name: Search repositories with GitHub API
+        id: search-repositories
+        uses: octokit/request-action@v2.x
+        with:
+          route: GET /search/repositories?q=org:GJ-playgroud+topic:core
+          headers: |
+            {
+              "accept": "application/vnd.github.v3+json",
+              "authorization": "Bearer ${{ secrets.PAT_TOKEN }}"
+            }
+      - name: Set output variable
+        id: set-output-variable
         run: |
-          QUERY="q=org:GJ-playgroud+topic:core"
-          TOKEN="${{ secrets.PAT_TOKEN  }}"
-          API_URL="https://api.github.com/search/repositories"
-        
-          RES=$(curl -s -H "Authorization: token $TOKEN" "$API_URL?$QUERY" | jq -r '.items[] | .full_name')
-          REPOS=$(echo "$RES" | while read REPO; do
-              echo $(echo "$REPO" | base64 --decode | jq -r '.[].full_name')
-          done)
-          echo "repos=$REPOS" >> $GITHUB_OUTPUT
+          echo "repos=$(echo '${{ steps.search-repositories.outputs.data }}' | jq -r '.items[].full_name' | paste -sd "," -)" >> $GITHUB_OUTPUT
+          
+
   echo:
-    needs: ['get_repos']
+    needs: ['search-repositories']
     runs-on: ubuntu-latest
     steps:
       - name: echo
-        run: echo ${{ fromJson(needs.get_repos.outputs.repos) }}
-        
-  build:
-    needs: ['get_repos']
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        repo: ${{ fromJson(needs.get_repos.outputs.repos) }}
-    steps:
-      - name: Build
-        run: |
-          echo ${{ matrix.repo }}
+        run: echo ${{ fromJson(needs.search-repositories.outputs.repos) }}
