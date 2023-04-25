@@ -3,7 +3,16 @@ name: "test"
 on:
   workflow_dispatch:
     inputs:
+      branch:
+        description: 'enter branch (only master and release-x.y.z are allowed)'
+        required: true
+        default: 'master'
+      version:
+        description: 'enter version(x.y.z)'
+        required: true
+        default: '1.0.0'
       no-cache:
+        description: 'Uncheck to use the cache when building images.'
         type: boolean
         required: false
         default: true
