@@ -3,17 +3,15 @@ name: "test"
 on:
   workflow_dispatch:
     inputs:
-      image:
-        description: image name and version
+      version:
+        description: 1.0.0
 jobs:
   echo:
     runs-on: ubuntu-latest
     steps:
-    - name: Copy
-      uses: andstor/copycat-action@v3
-      with:
-        personal_token: ${{ secrets.PAT_TOKEN }}
-        src_path: dist/
-        dst_path: /.
-        dst_owner: GJ-playgroud
-        dst_repo_name: plugin-test
+    - name: version
+      run: |
+        echo "XY=$(${{ github.event.inputs.version }} | cut -d'.' -f1-2)" >> $GITHUB_ENV
+        
+    - name: echo
+      run: echo ${{ env.XY }}
