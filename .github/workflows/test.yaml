@@ -3,15 +3,16 @@ name: "test"
 on:
   workflow_dispatch:
     inputs:
-      version:
-        description: 1.0.0
+      no-cache:
+        type: boolean
+        required: false
+        default: true
+        
 jobs:
   echo:
     runs-on: ubuntu-latest
     steps:
     - name: version
       run: |
-        echo "XY=$(echo ${{ github.event.inputs.version }} | cut -d'.' -f1-2)" >> $GITHUB_ENV
+        echo ${{ github.event.inputs.no-cache }}
         
-    - name: echo
-      run: echo ${{ env.XY }}
