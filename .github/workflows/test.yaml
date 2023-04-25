@@ -11,7 +11,7 @@ jobs:
     steps:
     - name: version
       run: |
-        echo "XY=$(${{ github.event.inputs.version }} | cut -d'.' -f1-2)" >> $GITHUB_ENV
+        echo "XY=$(echo ${{ github.event.inputs.version }} | cut -d'.' -f1-2)" >> $GITHUB_ENV
         
     - name: echo
       run: echo ${{ env.XY }}
