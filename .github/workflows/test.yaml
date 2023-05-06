@@ -1,27 +1,25 @@
-name: "test"
+name: test
 
 on:
   workflow_dispatch:
-    inputs:
-      branch:
-        description: 'enter branch (only master and release-x.y.z are allowed)'
-        required: true
-        default: 'master'
-      version:
-        description: 'enter version(x.y.z)'
-        required: true
-        default: '1.0.0'
-      no-cache:
-        description: 'Uncheck to use the cache when building images.'
-        type: boolean
-        required: false
-        default: true
-        
+
 jobs:
-  echo:
+  release:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     steps:
-    - name: version
-      run: |
-        echo ${{ github.event.inputs.no-cache }}
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
         
+      - name: Install chart-releaser
+        run: |
+          curl -sSLo cr.tar.gz "https://github.com/helm/chart-releaser/releases/download/v1.2.1/chart-releaser_1.2.1_linux_amd64.tar.gz"
+          tar -xzf cr.tar.gz
+          rm -f cr.tar.gz
+          cr version
+          
+      - name: package and puload helm chart
+        run : cr version
+
