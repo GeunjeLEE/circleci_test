@@ -2,6 +2,14 @@ name: test
 
 on:
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'enter version(x.y.z)'
+        required: true
+        default: '1.0.0'
+
+env:
+  VERSION: ${{ github.event.inputs.version }}
 
 jobs:
   release:
@@ -9,13 +17,7 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     steps:
-
       - name: Install Helm
-        uses: azure/setup-helm@v3
-        
-      - name: Install chart-releaser
         run: |
-          curl -sSLo cr.tar.gz "https://github.com/helm/chart-releaser/releases/download/v1.2.1/chart-releaser_1.2.1_linux_amd64.tar.gz"
-          tar -xzf cr.tar.gz
-          rm -f cr.tar.gz
-          ./cr version
+          converted_version=$(echo ${{ env.VERSION }} | sed -E 's/^([0-9]+\.[0-9]+)\.([a-zA-Z]+)/\1.0-\2/')
+          echo $converted_version
