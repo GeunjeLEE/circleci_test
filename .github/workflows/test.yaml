@@ -12,12 +12,24 @@ env:
   VERSION: ${{ github.event.inputs.version }}
 
 jobs:
-  release:
-    permissions:
-      contents: write
+  job1:
     runs-on: ubuntu-latest
     steps:
-      - name: Install Helm
+      - name: Get Date
         run: |
-          converted_version=$(echo ${{ env.VERSION }} | sed -E 's/^([0-9]+\.[0-9]+)\.([a-zA-Z]+)/\1.0-\2/')
-          echo $converted_version
+          sudo ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
+          CURRENT_TIME=$(date +'%Y%m%d.%H%M%S')
+          
+          echo "TIME=$CURRENT_TIME" >> $GITHUB_ENV
+          echo "TIME=$CURRENT_TIME" >> $GITHUB_OUTPUT
+          
+      - name: print date
+        run: echo ${{ env.TIME }}
+
+  job2:
+    needs: job1
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Date
+        run: |
+          echo ${{ needs.job1.outputs.TIME }}
