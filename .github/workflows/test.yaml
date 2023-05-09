@@ -14,8 +14,11 @@ env:
 jobs:
   job1:
     runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.get_date.outputs.TIME }}
     steps:
       - name: Get Date
+        id: get_date
         run: |
           sudo ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
           CURRENT_TIME=$(date +'%Y%m%d.%H%M%S')
@@ -32,4 +35,4 @@ jobs:
     steps:
       - name: Get Date
         run: |
-          echo ${{ needs.job1.outputs.TIME }}
+          echo ${{ needs.job1.outputs.output1 }}
