@@ -1,0 +1,26 @@
+name: "test remote trigger"
+on:
+  workflow_dispatch:
+    inputs:
+      container_arch:
+        type: choice
+        description: 'choose container architecture'
+        default: linux/amd64
+        options:
+        - linux/amd64
+        - linux/amd64,linux/arm64
+
+env:
+  ARCH: ${{ github.event.inputs.container_arch }}
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: task
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
+          repo: GeunjeLEE/circleci_test
+          workflow: test.yaml
+          inputs: '{"container_arch": "${{ env.ARCH }}"'
