@@ -8,8 +8,8 @@ on:
         description: 'enter version(x.y.z)'
         default: linux/amd64
         options:
-        - linux/amd64
-        - linux/amd64,linux/arm64
+        - "linux/amd64"
+        - "linux/amd64,linux/arm64"
 
 jobs:
   job1:
