@@ -15,3 +15,8 @@ jobs:
       redis:
         # Docker Hub image
         image: redis
+  echo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: task
+        run: echo "hello"
