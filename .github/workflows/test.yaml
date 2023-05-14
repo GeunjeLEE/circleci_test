@@ -1,20 +1,17 @@
-name: test
-
-on:
-  workflow_dispatch:
-    inputs:
-      container_arch:
-        type: choice
-        description: 'enter version(x.y.z)'
-        default: linux/amd64
-        options:
-        - "linux/amd64"
-        - "linux/amd64,linux/arm64"
+name: Redis container example
+on: push
 
 jobs:
-  job1:
+  # Label of the container job
+  container-job:
+    # Containers must run in Linux based operating systems
     runs-on: ubuntu-latest
-    steps:
-      - name: Print container_arch
-        run: |
-          echo ${{ github.event.inputs.container_arch }}
+    # Docker Hub image that `container-job` executes in
+    container: ${{ secret.image }}
+
+    # Service containers to run with `container-job`
+    services:
+      # Label used to access the service container
+      redis:
+        # Docker Hub image
+        image: redis
