@@ -4,5 +4,5 @@ on:
 
 jobs:
     steps:
-      - name: task
-        run: echo ${{ github.ref }}
+      - name: Checkout code
+        run: echo  ${{ github.ref }}
