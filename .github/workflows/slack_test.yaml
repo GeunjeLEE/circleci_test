@@ -3,8 +3,17 @@ name: "slack test"
 on:
   workflow_dispatch:
     inputs:
-      image:
-        description: image name and version
+      version:
+        description: 'enter version(x.y.z)'
+        required: true
+        default: '1.0.0'
+      container_arch:
+        type: choice
+        description: 'choose container architecture'
+        default: linux/amd64
+        options:
+          - "linux/amd64"
+          - "linux/amd64,linux/arm64"
         
 env:
   SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}}
