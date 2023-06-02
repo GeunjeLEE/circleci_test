@@ -11,5 +11,5 @@ jobs:
       - name: list
         run: |
           ls -la ./
-          echo ${{ github.action_repository }}
+          echo ${{ github.ref_name }}
 
