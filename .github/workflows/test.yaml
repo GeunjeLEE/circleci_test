@@ -1,4 +1,4 @@
-name: Redis container example
+name: checkout_test
 on:
   workflow_dispatch:
 
