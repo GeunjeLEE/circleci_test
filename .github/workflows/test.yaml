@@ -6,6 +6,10 @@ jobs:
   echo:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        run: echo  ${{ github.ref }}
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: list
+        run: |
+          ls -la ./
+          echo ${{ github.action_repository }}
 
